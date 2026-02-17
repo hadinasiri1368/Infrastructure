@@ -1,9 +1,15 @@
-package com.Infrastructure;
+package com.infrastructure;
 
+import com.infrastructure.repository.impl.BaseRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories(
+		basePackages = "com.infrastructure",
+		repositoryBaseClass = BaseRepositoryImpl.class
+)
 public class InfrastructureApplication {
 
 	public static void main(String[] args) {
