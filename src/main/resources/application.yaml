@@ -1,3 +1,23 @@
 spring:
   application:
-    name: Infrastructure
+    name: infrastructure
+  tenant-datasource:
+    minimum-idle: 2
+    maximum-pool-size: 10
+    connection-timeout: 150000
+    idle-timeout: 150000
+    initialization-fail-timeout: 150000
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          region:
+            factory_class: org.redisson.hibernate.RedissonRegionFactory
+          use_second_level_cache: true
+          use_query_cache: false
+          keys_factory: com.infrastructure.config.jpa.TenantAwareCacheKeysFactory
+          provider_configuration_file_resource_path: hibernate-redis.properties
+          multiTenancy: DATABASE
+
+
+
