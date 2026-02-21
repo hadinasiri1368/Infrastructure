@@ -1,5 +1,7 @@
-package com.infrastructure.config.jpa;
+package com.infrastructure.config.security;
 
+import com.infrastructure.Users;
+import com.infrastructure.util.AppUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -15,22 +17,22 @@ public class RequestContext {
         return currentUuid;
     }
 
-//    public static Users getUser() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null && auth.getPrincipal() != null) {
-//            CustomUserDetails userDetail = ((CustomUserDetails) auth.getPrincipal());
-//            if (userDetail == null)
-//                return null;
-//            return userDetail.getUser();
-//        }
-//        return null;
-//    }
-//
-//    public static Long getUserId() {
-//        Users currentUser = getUser();
-//        return AppUtils.isNull(currentUser) ? null : currentUser.getEntityId();
-//    }
-//
+    public static Users getUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            CustomUserDetails userDetail = ((CustomUserDetails) auth.getPrincipal());
+            if (userDetail == null)
+                return null;
+            return userDetail.getUser();
+        }
+        return null;
+    }
+
+    public static Long getUserId() {
+        Users currentUser = getUser();
+        return AppUtils.isNull(currentUser) ? null : currentUser.getId();
+    }
+
     public static String getToken() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
@@ -38,11 +40,6 @@ public class RequestContext {
         }
         return null;
     }
-//
-//    public static String getTokenId() {
-//        Long userId = getUserId();
-//        return AppUtils.isNull(userId) ? null : "_" + userId;
-//    }
 
     public static void clear() {
         uuid.remove();

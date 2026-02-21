@@ -3,7 +3,6 @@ package com.infrastructure.config.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.Users;
-import com.infrastructure.config.jpa.RequestContext;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.tokenManager.TokenManager;
 import com.infrastructure.constants.DateFormat;

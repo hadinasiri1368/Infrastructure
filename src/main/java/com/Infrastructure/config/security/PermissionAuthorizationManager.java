@@ -2,7 +2,6 @@ package com.infrastructure.config.security;
 
 import com.infrastructure.Permission;
 import com.infrastructure.PermissionService;
-import com.infrastructure.config.jpa.RequestContext;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.util.AppUtils;

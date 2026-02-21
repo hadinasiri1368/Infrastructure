@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.Permission;
 import com.infrastructure.PermissionService;
 import com.infrastructure.Users;
-import com.infrastructure.config.jpa.RequestContext;
+import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.CustomUserDetails;
 import com.infrastructure.constants.Consts;

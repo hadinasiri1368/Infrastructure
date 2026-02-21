@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Users {
-    private int id;
+    private Long id;
     private Boolean isAdmin;
     private Boolean isActive;
     private String username;

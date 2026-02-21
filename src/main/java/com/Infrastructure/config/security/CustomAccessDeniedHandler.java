@@ -2,7 +2,6 @@ package com.infrastructure.config.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infrastructure.config.jpa.RequestContext;
 import com.infrastructure.constants.DateFormat;
 import com.infrastructure.constants.TimeFormat;
 import com.infrastructure.exceptions.BaseException;
