@@ -3,18 +3,14 @@ package com.infrastructure.repository;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.model.BaseEntity;
-import com.infrastructure.repository.log.EntityChangedEvent;
+import com.infrastructure.log.EntityChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Collection;
 
 @Aspect

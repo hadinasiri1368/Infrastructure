@@ -1,7 +1,7 @@
 package com.infrastructure.repository;
 
-import com.infrastructure.repository.log.AuditLogger;
-import com.infrastructure.repository.log.EntityChangedEvent;
+import com.infrastructure.log.AuditLogger;
+import com.infrastructure.log.EntityChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class EntityChangedEventListener {
 
     @EventListener
     public void handle(EntityChangedEvent event) {
-        auditLogger.log(
+        auditLogger.repositoryLog(
                 event.username(),
                 event.tenantId(),
                 event.operation(),

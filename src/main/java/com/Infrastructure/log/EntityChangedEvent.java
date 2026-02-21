@@ -1,4 +1,4 @@
-package com.infrastructure.repository.log;
+package com.infrastructure.log;
 
 public record EntityChangedEvent(
         String username,
