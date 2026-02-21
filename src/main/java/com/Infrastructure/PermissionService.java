@@ -1,10 +1,16 @@
 package com.infrastructure;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
+@AllArgsConstructor
 public class PermissionService {
+
+
     public boolean isAuthenticationRequired(HttpServletRequest request) {
         return false;
     }

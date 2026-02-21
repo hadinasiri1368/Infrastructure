@@ -18,6 +18,8 @@ spring:
           keys_factory: com.infrastructure.config.jpa.TenantAwareCacheKeysFactory
           provider_configuration_file_resource_path: hibernate-redis.properties
           multiTenancy: DATABASE
+        show_sql: true
+        format_sql: true
 
 jwt:
   secretKey: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwMDYzODUzNywiaWF0IjoxNzAwNjM4NTM3fQ.cakxNusKVbUYfXIO_ldis-uQtQMxRO58Tktr31X6O_I
