@@ -1,6 +1,11 @@
 spring:
   application:
     name: infrastructure
+  datasource:
+    url: jdbc:oracle:thin:@//avdf01.rh:1985/rayansite.rh
+    username: support_fund
+    password: S$EAB6BF13
+    driver-class-name: oracle.jdbc.OracleDriver
   tenant-datasource:
     minimum-idle: 2
     maximum-pool-size: 10

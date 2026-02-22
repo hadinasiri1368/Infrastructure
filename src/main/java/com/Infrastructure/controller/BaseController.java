@@ -38,19 +38,18 @@ public abstract class BaseController<E, ID extends Serializable, D> {
 
     @DeleteMapping(path = Consts.DEFAULT_VERSION_API_URL + "/remove/{id}")
     public void remove(@PathVariable @NotEmpty(fieldName = "id") ID id) throws Exception {
-        E e = service.findById(id);
-        if (e == null)
-            throw new BaseException(GeneralExceptionType.FIELD_NOT_VALID, new Object[]{"id"});
         service.deleteById(id);
     }
 
     @GetMapping(path = Consts.DEFAULT_VERSION_API_URL + "/{id}")
-    public E get(@PathVariable("id") ID id) {
-        return service.findById(id);
+    public D get(@PathVariable("id") ID id) {
+        E e = service.findById(id);
+        return mapper.toDto(e);
     }
 
     @GetMapping
-    public List<E> getAll() {
-        return service.findAll();
+    public List<D> getAll() {
+        List<E> list = service.findAll();
+        return mapper.toDtoList(list);
     }
 }
