@@ -1,9 +1,9 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.Permission;
 import com.infrastructure.PermissionService;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
+import com.infrastructure.model.Permission;
 import com.infrastructure.util.AppUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -51,11 +51,11 @@ public class PermissionAuthorizationManager implements AuthorizationManager<Requ
         }
 
         String token = RequestContext.getToken();
-        if (permission.getRequiresAuthentication() && AppUtils.isNull(token)) {
+        if (permission.getIsSensitive() && AppUtils.isNull(token)) {
             throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
         }
 
-        String requiredAuthority = permission.getName();
+        String requiredAuthority = String.valueOf(permission.getId());
         boolean hasPermission = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(requiredAuthority));
 
         if (!hasPermission)

@@ -1,7 +1,7 @@
 package com.infrastructure;
 
+import com.infrastructure.model.Permission;
 import com.infrastructure.repository.BaseRepository;
-
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,6 +1,5 @@
 package com.infrastructure.controller;
 
-import com.infrastructure.Permission;
 import com.infrastructure.constants.Consts;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.GeneralExceptionType;

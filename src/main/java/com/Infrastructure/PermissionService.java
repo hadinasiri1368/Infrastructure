@@ -1,5 +1,6 @@
 package com.infrastructure;
 
+import com.infrastructure.model.Permission;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

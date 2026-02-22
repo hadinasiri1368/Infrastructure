@@ -36,4 +36,18 @@ springdoc:
     enabled: true
     disable-swagger-default-url: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+      base-path: /management
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
 

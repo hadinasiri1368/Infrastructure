@@ -2,7 +2,6 @@ package com.infrastructure.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infrastructure.Permission;
 import com.infrastructure.PermissionService;
 import com.infrastructure.Users;
 import com.infrastructure.config.security.RequestContext;
@@ -15,6 +14,7 @@ import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.ExceptionDto;
 import com.infrastructure.exceptions.GeneralExceptionType;
+import com.infrastructure.model.Permission;
 import com.infrastructure.util.AppUtils;
 import com.infrastructure.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -128,7 +128,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         else {
             Set<Permission> permissions = permissionService.getPermissions(user);
             for (Permission perm : permissions) {
-                auths.add(new SimpleGrantedAuthority(perm.getName()));
+                auths.add(new SimpleGrantedAuthority(String.valueOf(perm.getId())));
             }
         }
         return new CustomUserDetails(user, true, true, true, auths);
