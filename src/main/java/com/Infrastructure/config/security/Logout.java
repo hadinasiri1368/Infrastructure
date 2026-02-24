@@ -2,16 +2,13 @@ package com.infrastructure.config.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infrastructure.Users;
 import com.infrastructure.config.jpa.TenantContext;
-import com.infrastructure.config.tokenManager.TokenManager;
 import com.infrastructure.constants.DateFormat;
 import com.infrastructure.constants.TimeFormat;
-import com.infrastructure.exceptions.AuthenticationExceptionType;
+import com.infrastructure.domain.authentication.service.AuthenticationService;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.ExceptionDto;
 import com.infrastructure.util.AppUtils;
-import com.infrastructure.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -26,23 +23,17 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Configuration
 public class Logout implements LogoutHandler {
-    private final TokenManager tokenService;
+    private final AuthenticationService service;
 
-    public Logout(TokenManager tokenService) {
-        this.tokenService = tokenService;
+    public Logout(AuthenticationService service) {
+        this.service = service;
     }
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         try {
             String token = AppUtils.getToken(request);
-            if (AppUtils.isNull(token))
-                throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
-            Object object = JwtUtil.getTokenData(token);
-            if (object == null)
-                throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
-
-            tokenService.revokeToken(TenantContext.getCurrentTenant(), String.valueOf(((Users) object).getId()));
+            service.logout(token);
         } catch (BaseException e) {
             handleException(response, e.getMessage(), e.getParams());
         } catch (Exception e) {

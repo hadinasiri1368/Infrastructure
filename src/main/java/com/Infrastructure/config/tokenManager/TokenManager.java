@@ -1,8 +1,5 @@
 package com.infrastructure.config.tokenManager;
 
-import com.infrastructure.Users;
-import com.infrastructure.exceptions.BaseException;
-
 public interface TokenManager {
 
     String generateToken(String tenantId, String userId, Object user);

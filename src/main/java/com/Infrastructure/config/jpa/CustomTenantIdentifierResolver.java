@@ -15,11 +15,7 @@ public class CustomTenantIdentifierResolver implements CurrentTenantIdentifierRe
     @Override
     public String resolveCurrentTenantIdentifier() {
         if (AppUtils.isNull(TenantContext.getCurrentTenant())) {
-            return tenantDataSourceManager.getTenantDataSources()
-                    .keySet()
-                    .stream()
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("No tenant configured"));
+            return "default";
         }
         return TenantContext.getCurrentTenant();
     }

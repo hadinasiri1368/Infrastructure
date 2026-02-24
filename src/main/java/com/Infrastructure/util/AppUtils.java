@@ -7,6 +7,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
@@ -85,5 +87,41 @@ public class AppUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static String encodePassword(String password) {
+        return toSHA1(md5(password).getBytes());
+    }
+
+    public static String toSHA1(byte[] convertMe) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return byteArrayToHexString(md.digest(convertMe));
+    }
+
+    public static String byteArrayToHexString(byte[] b) {
+        String result = "";
+        for (int i = 0; i < b.length; i++) {
+            result +=
+                    Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+        }
+        return result;
+    }
+
+    public static String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+//            digest.update(s.getBytes());
+            return byteArrayToHexString(digest.digest(s.getBytes()));
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -4,10 +4,9 @@ import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.constants.DateFormat;
 import com.infrastructure.constants.TimeFormat;
 import com.infrastructure.log.impl.Log4jLogger;
-import com.infrastructure.service.BaseService;
 import com.infrastructure.util.AppUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ValidationException;
+//import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -77,23 +76,23 @@ public class GlobalControllerExceptionHandler {
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = ValidationException.class)
-    public ResponseEntity<ExceptionDto> handleGenralValidationException(ValidationException e, HttpServletRequest request) {
-        String uuid = RequestContext.getUuid();
-        String currentTime = LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern(DateFormat.GREGORIAN.getValue() + " " + TimeFormat.HOUR_MINUTE_SECOND.getValue()));
-
-        printLog(HttpStatus.BAD_REQUEST, e.getMessage(), currentTime, uuid);
-        String message = e.getMessage().split(": ")[1];
-        String code = message.split("&")[0];
-        Object[] params = getParams(message);
-        return new ResponseEntity<>(ExceptionDto.builder()
-                .code(code)
-                .message(AppUtils.getMessageFromMessageSource(code, params))
-                .uuid(uuid)
-                .time(currentTime)
-                .build(), HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(value = ValidationException.class)
+//    public ResponseEntity<ExceptionDto> handleGenralValidationException(ValidationException e, HttpServletRequest request) {
+//        String uuid = RequestContext.getUuid();
+//        String currentTime = LocalDateTime.now()
+//                .format(DateTimeFormatter.ofPattern(DateFormat.GREGORIAN.getValue() + " " + TimeFormat.HOUR_MINUTE_SECOND.getValue()));
+//
+//        printLog(HttpStatus.BAD_REQUEST, e.getMessage(), currentTime, uuid);
+//        String message = e.getMessage().split(": ")[1];
+//        String code = message.split("&")[0];
+//        Object[] params = getParams(message);
+//        return new ResponseEntity<>(ExceptionDto.builder()
+//                .code(code)
+//                .message(AppUtils.getMessageFromMessageSource(code, params))
+//                .uuid(uuid)
+//                .time(currentTime)
+//                .build(), HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDto> handleGenralMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {

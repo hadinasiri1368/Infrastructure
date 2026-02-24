@@ -1,6 +1,5 @@
 package com.infrastructure.config.tokenManager.impl;
 
-import com.infrastructure.Users;
 import com.infrastructure.config.tokenManager.TokenManager;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;

@@ -1,6 +1,7 @@
 package com.infrastructure;
 
 import com.infrastructure.model.Permission;
+import com.infrastructure.model.Users;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

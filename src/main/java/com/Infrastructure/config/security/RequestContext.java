@@ -1,6 +1,6 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.Users;
+import com.infrastructure.model.Users;
 import com.infrastructure.util.AppUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

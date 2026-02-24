@@ -5,7 +5,7 @@
     "company_name": "ارزش آفرین گلرنگ",
     "db_name": "funddb1",
     "webapp_dir": "aatf",
-    "db_url": "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = avdf01.rh)(PORT = 2019)))(CONNECT_DATA =  (SERVICE_NAME = rayannav21c.rh)))",
+    "db_url": "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = 192.168.160.21)(PORT = 1521)))(CONNECT_DATA =  (SERVICE_NAME = NAVPDB21C.RH)))",
     "schema_pass": "fund1234",
     "fund_type_id": 3,
     "fund_type_name": "صندوق سرمايه گذاري با درآمد ثابت"
@@ -16,7 +16,7 @@
     "company_name": "ارزش آفرین گلرنگ 2",
     "db_name": "funddb2",
     "webapp_dir": "aatf2",
-    "db_url": "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = avdf01.rh)(PORT = 2019)))(CONNECT_DATA =  (SERVICE_NAME = rayannav21c.rh)))",
+    "db_url": "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = 192.168.160.21)(PORT = 1521)))(CONNECT_DATA =  (SERVICE_NAME = NAVPDB21C.RH)))",
     "schema_pass": "fund1234",
     "fund_type_id": 3,
     "fund_type_name": "صندوق سرمايه گذاري با درآمد ثابت 2"

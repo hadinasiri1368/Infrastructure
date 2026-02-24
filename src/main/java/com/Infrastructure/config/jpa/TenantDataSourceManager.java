@@ -25,7 +25,7 @@ import java.util.Map;
 @Component
 public class TenantDataSourceManager {
     private final DataSource dataSource;
-    @Value("${spring.profiles.active:default}")
+    @Value("${spring.profiles.active}")
     private String activeProfile;
 
     public TenantDataSourceManager(DataSource dataSource) {

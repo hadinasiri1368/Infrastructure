@@ -1,6 +1,6 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.Users;
+import com.infrastructure.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

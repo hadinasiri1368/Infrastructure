@@ -3,7 +3,9 @@ package com.infrastructure.config.jpa;
 import org.hibernate.cache.internal.DefaultCacheKeysFactory;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.persister.entity.EntityPersister;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TenantAwareCacheKeysFactory extends DefaultCacheKeysFactory {
     @Override
     public Object createEntityKey(

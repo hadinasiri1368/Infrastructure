@@ -1,7 +1,6 @@
 package com.infrastructure.filter;
 
 import com.infrastructure.config.jpa.TenantContext;
-import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.metric.UriNormalizer;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

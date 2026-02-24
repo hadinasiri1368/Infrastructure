@@ -1,9 +1,12 @@
 package com.infrastructure.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import java.io.Serializable;
 
 @Table(name = "AHA_Role")

@@ -7,9 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-
-
 import javax.sql.DataSource;
+import java.util.Map;
 
 @Configuration
 public class JpaConfig {
@@ -21,17 +20,44 @@ public class JpaConfig {
         this.tenantDataSourceManager = tenantDataSourceManager;
     }
 
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource, CustomMultiTenantConnectionProvider multiTenantConnectionProvider,
+//                                                                       CustomTenantIdentifierResolver tenantIdentifierResolver) {
+//        LocalContainerEntityManagerFactoryBean factory = builder
+//                .dataSource(dataSource)
+//                .packages("com.infrastructure")
+//                .build();
+//        factory.getJpaPropertyMap().put(Environment.DIALECT, "org.hibernate.dialect.OracleDialect");
+//        factory.getJpaPropertyMap().put("hibernate.multi_tenant_connection_provider", multiTenantConnectionProvider);
+//        factory.getJpaPropertyMap().put("hibernate.tenant_identifier_resolver", tenantIdentifierResolver);
+//        factory.getJpaPropertyMap().put("hibernate.multiTenancy", "DATABASE");
+//
+//        return factory;
+//    }
+
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource, CustomMultiTenantConnectionProvider multiTenantConnectionProvider,
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
+                                                                       CustomMultiTenantConnectionProvider multiTenantConnectionProvider,
                                                                        CustomTenantIdentifierResolver tenantIdentifierResolver) {
+
         LocalContainerEntityManagerFactoryBean factory = builder
                 .dataSource(dataSource)
-                .packages("org.fund")
+                .packages("com.infrastructure.model")
                 .build();
-        factory.getJpaPropertyMap().put(Environment.DIALECT, "org.hibernate.dialect.OracleDialect");
-        factory.getJpaPropertyMap().put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
-        factory.getJpaPropertyMap().put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantIdentifierResolver);
-        factory.getJpaPropertyMap().put("hibernate.multiTenancy", "DATABASE");
+
+        Map<String, Object> jpaProps = factory.getJpaPropertyMap();
+        jpaProps.put("hibernate.multi_tenancy", "DATABASE");
+        jpaProps.put("hibernate.multi_tenant_connection_provider", multiTenantConnectionProvider);
+        jpaProps.put("hibernate.tenant_identifier_resolver", tenantIdentifierResolver);
+        jpaProps.put(Environment.DIALECT, "org.hibernate.dialect.OracleDialect");
+
+        // Redisson tenant-aware
+        jpaProps.put("hibernate.cache.region.factory_class", "org.hibernate.cache.jcache.internal.JCacheRegionFactory");
+        jpaProps.put("hibernate.cache.use_second_level_cache", true);
+        jpaProps.put("hibernate.cache.use_query_cache", false);
+        jpaProps.put("hibernate.cache.keys_factory", "com.infrastructure.config.jpa.TenantAwareCacheKeysFactory");
+        jpaProps.put("hibernate.cache.provider_configuration_file_resource_path", "hibernate-redis.properties");
+        jpaProps.put("hibernate.javax.cache.uri", "classpath:redisson-jcache.yaml");
 
         return factory;
     }

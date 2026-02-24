@@ -1,7 +1,6 @@
 package com.infrastructure.util;
 
 
-import com.infrastructure.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,7 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
+
 import javax.crypto.SecretKey;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;

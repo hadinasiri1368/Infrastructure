@@ -2,8 +2,8 @@ package com.infrastructure.repository;
 
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.RequestContext;
-import com.infrastructure.model.BaseEntity;
 import com.infrastructure.log.EntityChangedEvent;
+import com.infrastructure.model.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,8 +20,8 @@ public class RepositoryAuditAspect {
 
     private final ApplicationEventPublisher publisher;
 
-    @Around("execution(* org.springframework.data.repository.CrudRepository+.save*(..)) || " +
-            "execution(* org.springframework.data.repository.CrudRepository+.delete*(..))")
+    @Around("execution(* org.springframework.data.jpa.repository.JpaRepository+.save*(..)) || " +
+            "execution(* org.springframework.data.jpa.repository.JpaRepository+.delete*(..))")
     public Object intercept(ProceedingJoinPoint joinPoint) throws Throwable {
 
         Object result = joinPoint.proceed();
