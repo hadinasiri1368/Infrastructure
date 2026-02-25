@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface UsersRepository extends BaseRepository<Users, Long> {
-    Optional<Users> findByUsernameAndPassword(String username, String password);
+    Optional<Users> findByUsername(String username);
 }
