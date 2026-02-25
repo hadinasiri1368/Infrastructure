@@ -119,14 +119,25 @@ public class AppUtils {
 
     public static String md5(String s) {
         try {
-            // Create MD5 Hash
             MessageDigest digest = MessageDigest.getInstance("MD5");
-//            digest.update(s.getBytes());
             return byteArrayToHexString(digest.digest(s.getBytes()));
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String removeNumericPathVariables(String url) {
+        StringBuilder result = new StringBuilder();
+        String[] parts = url.split("/");
+
+        for (String part : parts) {
+            if (part.isBlank()) continue;
+            if (!part.matches("\\d+")) {
+                result.append("/").append(part);
+            }
+        }
+        return result.toString();
     }
 }
