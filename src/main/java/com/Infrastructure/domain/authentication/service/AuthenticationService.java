@@ -3,6 +3,7 @@ package com.infrastructure.domain.authentication.service;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.config.tokenManager.TokenManager;
+import com.infrastructure.constants.Consts;
 import com.infrastructure.domain.authentication.dto.LoginDto;
 import com.infrastructure.domain.authentication.repository.UsersRepository;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
@@ -39,13 +40,13 @@ public class AuthenticationService {
 
     public String refreshToken() throws Exception {
         String token = RequestContext.getToken();
-        Object user = JwtUtil.getTokenData(token);
+        Object user = JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
         logout(token);
         return tokenService.generateToken(TenantContext.getCurrentTenant(), String.valueOf(((Users) user).getId()), user);
     }
 
     private Users getUser(String username, String password) {
-        Optional<Users> user = usersRepository.findByUsernameAndPassword(username, password);
+        Optional<Users> user = usersRepository.findByUsername(username);
         if (!user.isPresent()) {
             throw new BaseException(AuthenticationExceptionType.USERNAME_PASSWORD_INVALID);
         }
@@ -66,7 +67,7 @@ public class AuthenticationService {
     public void logout(String token) throws Exception {
         if (AppUtils.isNull(token))
             throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
-        Object object = JwtUtil.getTokenData(token);
+        Object object = JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
         if (object == null)
             throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
 

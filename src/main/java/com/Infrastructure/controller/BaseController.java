@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
-@RestController
 @Validated
 @RequestMapping(Consts.DEFAULT_PREFIX_API_URL)
 @AllArgsConstructor

@@ -20,21 +20,6 @@ public class JpaConfig {
         this.tenantDataSourceManager = tenantDataSourceManager;
     }
 
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource, CustomMultiTenantConnectionProvider multiTenantConnectionProvider,
-//                                                                       CustomTenantIdentifierResolver tenantIdentifierResolver) {
-//        LocalContainerEntityManagerFactoryBean factory = builder
-//                .dataSource(dataSource)
-//                .packages("com.infrastructure")
-//                .build();
-//        factory.getJpaPropertyMap().put(Environment.DIALECT, "org.hibernate.dialect.OracleDialect");
-//        factory.getJpaPropertyMap().put("hibernate.multi_tenant_connection_provider", multiTenantConnectionProvider);
-//        factory.getJpaPropertyMap().put("hibernate.tenant_identifier_resolver", tenantIdentifierResolver);
-//        factory.getJpaPropertyMap().put("hibernate.multiTenancy", "DATABASE");
-//
-//        return factory;
-//    }
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
                                                                        CustomMultiTenantConnectionProvider multiTenantConnectionProvider,

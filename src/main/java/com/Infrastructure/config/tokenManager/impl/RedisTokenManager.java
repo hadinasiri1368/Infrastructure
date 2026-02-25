@@ -1,6 +1,7 @@
 package com.infrastructure.config.tokenManager.impl;
 
 import com.infrastructure.config.tokenManager.TokenManager;
+import com.infrastructure.constants.Consts;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.GeneralExceptionType;
@@ -53,7 +54,7 @@ public class RedisTokenManager implements TokenManager {
 
         String key = sessionKey(tenantId, userId);
 
-        String newToken = JwtUtil.createToken(user);
+        String newToken = JwtUtil.createToken(user, tenantId);
 
         return redisTemplate.execute(
                 generateTokenScript,
@@ -90,7 +91,7 @@ public class RedisTokenManager implements TokenManager {
             throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
         }
 
-        return JwtUtil.getTokenData(token);
+        return JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
     }
 
     @Override

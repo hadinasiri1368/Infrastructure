@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  messages:
+    basename: message
+    encoding: utf-8
   cache:
     type: redis
   main:
@@ -48,4 +51,4 @@ springdoc:
     tags-sorter: alpha
 
 authentication:
-  paths-to-bypass: /api-docs/**, /api-docs.yaml, /swagger-ui/**, /swagger-ui.html, /swagger-resources/**, /webjars/**, /favicon.ico, /management/**
+  paths-to-bypass: /api-docs/**, /api-docs.yaml, /swagger-ui/**, /swagger-ui.html, /swagger-resources/**, /webjars/**, /favicon.ico, /management/**,/error

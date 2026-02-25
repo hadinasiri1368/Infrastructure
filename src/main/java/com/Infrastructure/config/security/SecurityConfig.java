@@ -1,6 +1,6 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.PermissionService;
+import com.infrastructure.domain.authentication.service.PermissionService;
 import com.infrastructure.filter.AuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

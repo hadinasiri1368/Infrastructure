@@ -1,6 +1,7 @@
 package com.infrastructure.util;
 
 
+import com.infrastructure.constants.Consts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,7 +28,6 @@ public class JwtUtil implements Serializable {
 
     private static String secretKey;
     private static int expirationMinutes;
-    private static final String CLAIMS_KEY = "userData";
 
     @PostConstruct
     public void init() {
@@ -35,19 +35,20 @@ public class JwtUtil implements Serializable {
         JwtUtil.expirationMinutes = expiration;
     }
 
-    public static String createToken(Object user) {
+    public static String createToken(Object user, String tenantId) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIMS_KEY, user);
+        claims.put(Consts.CLAIMS_USER_KEY, user);
+        claims.put(Consts.CLAIMS_TENANT_KEY, tenantId);
         return generateToken(claims);
     }
 
-    public static Object getTokenData(String token) {
+    public static Object getTokenData(String token,String key) {
         if (token == null || token.isEmpty()) {
             return null;
         }
         try {
             Claims claims = extractAllClaims(token);
-            return claims.get(CLAIMS_KEY);
+            return claims.get(key);
         } catch (Exception e) {
             return null;
         }

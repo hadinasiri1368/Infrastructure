@@ -2,13 +2,13 @@ package com.infrastructure.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infrastructure.PermissionService;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.CustomUserDetails;
 import com.infrastructure.config.security.RequestContext;
 import com.infrastructure.constants.Consts;
 import com.infrastructure.constants.DateFormat;
 import com.infrastructure.constants.TimeFormat;
+import com.infrastructure.domain.authentication.service.PermissionService;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.ExceptionDto;
@@ -54,17 +54,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             throws IOException {
         try {
             String token = AppUtils.getToken(request);
-            if (AppUtils.isNull(token))
-                throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
+            Users user = (Users) JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
+            String tokenTenantId = (String) JwtUtil.getTokenData(token, Consts.CLAIMS_TENANT_KEY);
+            String tenantId = AppUtils.getTenantId(request);
 
-            String tenantId = request.getHeader(Consts.HEADER_TENANT_PARAM_NAME);
-            if (AppUtils.isNull(tenantId))
-                throw new BaseException(GeneralExceptionType.SCHEMAID_ID_IS_NULL);
-
-            Users user = (Users) JwtUtil.getTokenData(token);
+            validation(token, tokenTenantId, tenantId);
 
             setupSecurityContext(request, user);
-            setTenantId(tenantId);
 
             String startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DateFormat.GREGORIAN.getValue() + " " + TimeFormat.HOUR_MINUTE_SECOND.getValue()));
             log.info("RequestURL: {} | Start Date : {} | uuid : {}", request.getRequestURL(), startTime, RequestContext.getUuid());
@@ -118,7 +114,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return permissionService.isAuthenticationRequired(request);
+        String tenantId = AppUtils.getTenantId(request);
+        setTenantId(tenantId);
+        return !permissionService.isAuthenticationRequired(request);
     }
 
     private UserDetails getUserDetails(Users user) {
@@ -140,5 +138,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
+    }
+
+    private void validation(String token, String tokenTenantId, String requestTenantId) {
+        if (AppUtils.isNull(token))
+            throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
+
+        String tenantId = requestTenantId;
+        if (AppUtils.isNull(tenantId))
+            throw new BaseException(GeneralExceptionType.SCHEMAID_ID_IS_NULL);
+
+        if (!tenantId.equals(tokenTenantId))
+            throw new BaseException(GeneralExceptionType.TENANT_NOT_VALID);
     }
 }

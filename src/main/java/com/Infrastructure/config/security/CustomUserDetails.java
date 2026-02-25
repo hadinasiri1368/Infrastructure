@@ -1,5 +1,6 @@
 package com.infrastructure.config.security;
 
+import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

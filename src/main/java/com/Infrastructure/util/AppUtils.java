@@ -1,5 +1,6 @@
 package com.infrastructure.util;
 
+import com.infrastructure.constants.Consts;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -36,6 +37,10 @@ public class AppUtils {
         if (isNull(request.getHeader("Authorization")))
             return null;
         return request.getHeader("Authorization").replaceAll("Bearer ", "");
+    }
+
+    public static String getTenantId(HttpServletRequest request) {
+        return request.getHeader(Consts.HEADER_TENANT_PARAM_NAME);
     }
 
     public static boolean isNull(Object o) {

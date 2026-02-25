@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-@Component
+//@Component
 public class MetricsFilter extends OncePerRequestFilter {
 
     private final MeterRegistry meterRegistry;

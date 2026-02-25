@@ -12,6 +12,7 @@ public enum GeneralExceptionType {
     DATE_VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "validation.PersianDateNotValid.message"),
     FIELD_NOT_VALID(HttpStatus.INTERNAL_SERVER_ERROR, "validation.FieldNotValid.message"),
     SCHEMAID_ID_IS_NULL(HttpStatus.BAD_REQUEST, "general_exception.schemaId_id_is_null"),
+    TENANT_NOT_VALID(HttpStatus.BAD_REQUEST, "general_exception.tenant_not_valid"),
     UNKNOWN_ERROR(HttpStatus.BAD_REQUEST, "general_exception.Unknown_error"),
     ;
 

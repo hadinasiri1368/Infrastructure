@@ -1,6 +1,6 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.PermissionService;
+import com.infrastructure.domain.authentication.service.PermissionService;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.model.Permission;

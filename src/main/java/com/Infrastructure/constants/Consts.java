@@ -11,4 +11,6 @@ public class Consts {
     public static final String PREFIX_API_URL = "/api";
     public static final String DEFAULT_PREFIX_API_URL = PREFIX_API_URL;
     public static final String DEFAULT_VERSION_API_URL = "/v1";
+    public static final String CLAIMS_USER_KEY = "userData";
+    public static final String CLAIMS_TENANT_KEY = "tenantId";
 }
