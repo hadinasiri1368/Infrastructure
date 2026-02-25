@@ -1,10 +1,11 @@
-package com.infrastructure.domain.authentication.service;
+package com.infrastructure.domain.permission.service;
 
 import com.infrastructure.domain.authentication.dto.UserPermissionDto;
-import com.infrastructure.domain.authentication.repository.PermissionRepository;
+import com.infrastructure.domain.permission.repository.PermissionRepository;
 import com.infrastructure.model.Permission;
 import com.infrastructure.model.Users;
 import com.infrastructure.service.BaseService;
+import com.infrastructure.util.AppUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -46,13 +47,10 @@ public class PermissionService extends BaseService<Permission, Long> {
     }
 
     public Permission findPermissionByUrl(String requestUrl) {
-        List<Permission> permissions = findAll();
-        return permissions.stream()
-                .filter(p -> p.getUrl() != null && pathMatcher.match(p.getUrl(), requestUrl))
-                .min(Comparator.comparing(Permission::getUrl, pathMatcher.getPatternComparator(requestUrl)))
+        return repository.findAll().stream()
+                .filter(a -> a.getIsSensitive() && AppUtils.removeNumericPathVariables(requestUrl).toLowerCase().startsWith(a.getUrl().toLowerCase()))
+                .findFirst()
                 .orElse(null);
-
-
     }
 
     @Cacheable(value = "user-permissions", keyGenerator = "tenantAwareKeyGenerator")
@@ -74,9 +72,14 @@ public class PermissionService extends BaseService<Permission, Long> {
     }
 
     private List<Permission> getUserPermissions(Long userId) {
-        List<Permission> permissions = repository.findAllUserPermission().stream()
-                .filter(a -> a.userId().equals(userId))
-                .map(UserPermissionDto::permission)
+        List<UserPermissionDto> userPermissionDtos = repository.findAllPermissionFromUser();
+        userPermissionDtos.addAll(repository.findAllPermissionFromGroup());
+        userPermissionDtos.addAll(repository.findAllPermissionFromRole());
+
+
+        List<Permission> permissions = userPermissionDtos.stream()
+                .filter(a -> a.getUserId().equals(userId))
+                .map(UserPermissionDto::getPermission)
                 .collect(Collectors.toList());
         return permissions;
     }

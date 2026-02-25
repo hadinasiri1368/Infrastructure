@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Validated
-@RequestMapping(Consts.DEFAULT_PREFIX_API_URL)
 @AllArgsConstructor
+@RequestMapping(Consts.DEFAULT_PREFIX_API_URL + Consts.DEFAULT_VERSION_API_URL)
 public abstract class BaseController<E, ID extends Serializable, D> {
     protected final BaseService<E, ID> service;
     protected final BaseMapper<E, D> mapper;
 
-    @PostMapping(path = Consts.DEFAULT_VERSION_API_URL + "/add")
+    @PostMapping(path = "/add")
     public void insert(@RequestBody D dto) throws Exception {
         E e = mapper.toEntity(dto);
         ((BaseEntity) e).setId(null);
         service.save(e);
     }
 
-    @PutMapping(path = Consts.DEFAULT_VERSION_API_URL + "/edit")
+    @PutMapping(path =  "/edit")
     public void edit(@RequestBody D dto) throws Exception {
         E e = mapper.toEntity(dto);
         if (((BaseEntity) e).getId() == null)
@@ -36,12 +35,12 @@ public abstract class BaseController<E, ID extends Serializable, D> {
         service.save(e);
     }
 
-    @DeleteMapping(path = Consts.DEFAULT_VERSION_API_URL + "/remove/{id}")
+    @DeleteMapping(path = "/remove/{id}")
     public void remove(@PathVariable @NotEmpty(fieldName = "id") ID id) throws Exception {
         service.deleteById(id);
     }
 
-    @GetMapping(path = Consts.DEFAULT_VERSION_API_URL + "/{id}")
+    @GetMapping(path = "/{id}")
     public D get(@PathVariable("id") ID id) {
         E e = service.findById(id);
         return mapper.toDto(e);

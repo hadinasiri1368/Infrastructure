@@ -18,7 +18,7 @@ public class AuthenticationController {
         return service.login(loginDto);
     }
 
-    @PutMapping(path = "/refreshToken")
+    @PutMapping(path = Consts.DEFAULT_PREFIX_API_URL + "/refreshToken")
     public String refreshToken() throws Exception {
         return service.refreshToken();
     }

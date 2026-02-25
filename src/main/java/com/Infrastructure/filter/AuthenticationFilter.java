@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.config.jpa.TenantContext;
 import com.infrastructure.config.security.CustomUserDetails;
 import com.infrastructure.config.security.RequestContext;
+import com.infrastructure.config.tokenManager.TokenManager;
 import com.infrastructure.constants.Consts;
 import com.infrastructure.constants.DateFormat;
 import com.infrastructure.constants.TimeFormat;
-import com.infrastructure.domain.authentication.service.PermissionService;
+import com.infrastructure.domain.permission.service.PermissionService;
 import com.infrastructure.exceptions.AuthenticationExceptionType;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.ExceptionDto;
@@ -21,12 +22,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -39,12 +42,11 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
+@AllArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
     private final PermissionService permissionService;
-
-    public AuthenticationFilter(PermissionService permissionService) {
-        this.permissionService = permissionService;
-    }
+    private final ObjectMapper objectMapper;
+    private final TokenManager tokenManager;
 
     @Override
     protected void doFilterInternal(
@@ -54,11 +56,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             throws IOException {
         try {
             String token = AppUtils.getToken(request);
-            Users user = (Users) JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
+            Object object = JwtUtil.getTokenData(token, Consts.CLAIMS_USER_KEY);
+            Users user = objectMapper.convertValue(object, Users.class);
             String tokenTenantId = (String) JwtUtil.getTokenData(token, Consts.CLAIMS_TENANT_KEY);
             String tenantId = AppUtils.getTenantId(request);
 
-            validation(token, tokenTenantId, tenantId);
+            validation(token, tokenTenantId, tenantId, user);
 
             setupSecurityContext(request, user);
 
@@ -140,7 +143,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         return mapper.writeValueAsString(object);
     }
 
-    private void validation(String token, String tokenTenantId, String requestTenantId) {
+    private void validation(String token, String tokenTenantId, String requestTenantId, Users user) {
         if (AppUtils.isNull(token))
             throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
 
@@ -150,5 +153,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         if (!tenantId.equals(tokenTenantId))
             throw new BaseException(GeneralExceptionType.TENANT_NOT_VALID);
+
+        if (!tokenManager.isTokenValid(token, requestTenantId, String.valueOf(user.getId())))
+            throw new BaseException(AuthenticationExceptionType.TOKEN_IS_NULL);
+
     }
 }

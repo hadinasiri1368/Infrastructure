@@ -51,4 +51,4 @@ springdoc:
     tags-sorter: alpha
 
 authentication:
-  paths-to-bypass: /api-docs/**, /api-docs.yaml, /swagger-ui/**, /swagger-ui.html, /swagger-resources/**, /webjars/**, /favicon.ico, /management/**,/error
+  paths-to-bypass: /api-docs/**, /api-docs.yaml, /swagger-ui/**, /swagger-ui.html, /swagger-resources/**, /webjars/**, /favicon.ico, /management/**,/login/**

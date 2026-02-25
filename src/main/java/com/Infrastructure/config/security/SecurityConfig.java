@@ -1,6 +1,8 @@
 package com.infrastructure.config.security;
 
-import com.infrastructure.domain.authentication.service.PermissionService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infrastructure.config.tokenManager.TokenManager;
+import com.infrastructure.domain.permission.service.PermissionService;
 import com.infrastructure.filter.AuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,13 +31,15 @@ public class SecurityConfig {
     private final PermissionService permissionService;
     private final PermissionAuthorizationManager permissionAuthorizationManager;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final ObjectMapper objectMapper;
+    private final TokenManager tokenManager;
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> {
                 })
-                .addFilterBefore(new AuthenticationFilter(permissionService),
+                .addFilterBefore(new AuthenticationFilter(permissionService, objectMapper, tokenManager),
                         UsernamePasswordAuthenticationFilter.class)
 
 
