@@ -1,9 +1,9 @@
-package com.infrastructure.domain.permission.controller;
+package com.infrastructure.domain.authentication.controller;
 
 import com.infrastructure.constants.Consts;
 import com.infrastructure.controller.BaseController;
-import com.infrastructure.domain.permission.dto.PermissionDto;
-import com.infrastructure.domain.permission.mapper.PermissionMapper;
+import com.infrastructure.domain.authentication.dto.PermissionDto;
+import com.infrastructure.domain.authentication.mapper.PermissionMapper;
 import com.infrastructure.model.Permission;
 import com.infrastructure.service.BaseService;
 import org.springframework.validation.annotation.Validated;

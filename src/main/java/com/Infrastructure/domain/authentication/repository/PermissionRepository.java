@@ -1,4 +1,4 @@
-package com.infrastructure.domain.permission.repository;
+package com.infrastructure.domain.authentication.repository;
 
 
 import com.infrastructure.domain.authentication.dto.UserPermissionDto;

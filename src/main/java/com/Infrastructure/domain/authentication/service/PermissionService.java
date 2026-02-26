@@ -1,7 +1,7 @@
-package com.infrastructure.domain.permission.service;
+package com.infrastructure.domain.authentication.service;
 
 import com.infrastructure.domain.authentication.dto.UserPermissionDto;
-import com.infrastructure.domain.permission.repository.PermissionRepository;
+import com.infrastructure.domain.authentication.repository.PermissionRepository;
 import com.infrastructure.model.Permission;
 import com.infrastructure.model.Users;
 import com.infrastructure.service.BaseService;
@@ -12,7 +12,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

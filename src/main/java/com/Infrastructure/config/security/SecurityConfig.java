@@ -2,7 +2,7 @@ package com.infrastructure.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.config.tokenManager.TokenManager;
-import com.infrastructure.domain.permission.service.PermissionService;
+import com.infrastructure.domain.authentication.service.PermissionService;
 import com.infrastructure.filter.AuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,5 @@
-package com.infrastructure.domain.permission.dto;
+package com.infrastructure.domain.authentication.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,3 +15,4 @@ public class PermissionDto {
     private String url;
     private Boolean isSensitive;
 }
+
