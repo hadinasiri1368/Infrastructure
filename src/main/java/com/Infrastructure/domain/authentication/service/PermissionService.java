@@ -2,6 +2,7 @@ package com.infrastructure.domain.authentication.service;
 
 import com.infrastructure.domain.authentication.dto.UserPermissionDto;
 import com.infrastructure.domain.authentication.repository.PermissionRepository;
+import com.infrastructure.domain.search.FilterValueConverter;
 import com.infrastructure.model.Permission;
 import com.infrastructure.model.Users;
 import com.infrastructure.service.BaseService;
@@ -24,8 +25,8 @@ public class PermissionService extends BaseService<Permission, Long> {
     private static final AntPathMatcher pathMatcher = new AntPathMatcher();
     private final PermissionRepository repository;
 
-    public PermissionService(PermissionRepository repository) {
-        super(repository);
+    public PermissionService(PermissionRepository repository, FilterValueConverter filterValueConverter) {
+        super(repository, filterValueConverter, Permission.class);
         this.repository = repository;
     }
 

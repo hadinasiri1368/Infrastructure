@@ -1,24 +1,24 @@
 package com.infrastructure.controller;
 
-import com.infrastructure.constants.Consts;
+import com.infrastructure.domain.search.FilterRequest;
 import com.infrastructure.exceptions.BaseException;
 import com.infrastructure.exceptions.GeneralExceptionType;
 import com.infrastructure.mapper.BaseMapper;
 import com.infrastructure.model.BaseEntity;
 import com.infrastructure.service.BaseService;
 import com.infrastructure.validator.NotEmpty;
-import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.Serializable;
 import java.util.List;
 
-@AllArgsConstructor
-@RequestMapping(Consts.DEFAULT_PREFIX_API_URL + Consts.DEFAULT_VERSION_API_URL)
 public abstract class BaseController<E, ID extends Serializable, D> {
     protected final BaseService<E, ID> service;
     protected final BaseMapper<E, D> mapper;
+
+    public BaseController(BaseService<E, ID> service, BaseMapper<E, D> mapper) {
+        this.service = service;
+        this.mapper = mapper;
+    }
 
     @PostMapping(path = "/add")
     public void insert(@RequestBody D dto) throws Exception {
@@ -41,14 +41,20 @@ public abstract class BaseController<E, ID extends Serializable, D> {
     }
 
     @GetMapping(path = "/{id}")
-    public D get(@PathVariable("id") ID id) {
+    public D find(@PathVariable("id") ID id) {
         E e = service.findById(id);
         return mapper.toDto(e);
     }
 
     @GetMapping
-    public List<D> getAll() {
+    public List<D> findAll() {
         List<E> list = service.findAll();
+        return mapper.toDtoList(list);
+    }
+
+    @PostMapping(path = "/search")
+    public List<D> findAll(@RequestBody FilterRequest filter) {
+        List<E> list = service.findAll(filter);
         return mapper.toDtoList(list);
     }
 }

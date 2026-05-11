@@ -85,8 +85,7 @@ public class TenantDataSourceManager {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonInput = FileUtils.loadSqlFromFile(Consts.DEFAULT_FOLDER_ADDRESS + Consts.SCHEMAS_LIST_FILE_NAME);
-            List<LinkedHashMap<String, Object>> list = objectMapper.readValue(jsonInput, new TypeReference<List<LinkedHashMap<String, Object>>>() {
-            });
+            List<LinkedHashMap<String, Object>> list = objectMapper.readValue(jsonInput, new TypeReference<List<LinkedHashMap<String, Object>>>() {});
             if (AppUtils.isNull(list))
                 throw new RuntimeException("there is no schema for connection");
             int count = 0;

@@ -6,6 +6,7 @@ import com.infrastructure.domain.authentication.dto.PermissionDto;
 import com.infrastructure.domain.authentication.mapper.PermissionMapper;
 import com.infrastructure.model.Permission;
 import com.infrastructure.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
